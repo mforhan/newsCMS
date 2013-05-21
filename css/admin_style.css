@@ -1,0 +1,45 @@
+/* 
+http://csszengarden.com/?cssfile=/075/075.css&page=4
+http://csszengarden.com/?cssfile=/089/089.css&page=2
+*/
+
+/* Admin CSS */
+.contentList {
+         width:590px;
+         padding:5px;
+         margin: 5px;
+         background-color: #C0C0C0;
+         color: black;
+         border:solid 1px;
+         border-color:black;
+         font-family: arial,times;
+         cursor:default;
+         }
+
+.lineItem {
+         display:block;
+         background-color: #C0C0C0;
+         }
+
+.titleList {
+         background-color:#E0E0E0;
+         display:inline;
+         }
+
+.dateList {
+         background-color: #C0C0C0;
+         display:inline;
+         /* align:right; */
+         float:right; 
+}
+
+.inlineList {
+         display:inline;
+         }
+
+/* Test Stuff */
+.listStyle {
+         list-style:none inside circle;
+         font-size:xx-small;
+         display:inline;
+         }

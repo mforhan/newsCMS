@@ -1,0 +1,181 @@
+body {
+ background-color:#efefef;
+ font-family:Times, serif;
+ font-size:1em;
+}
+/* Links ANYWHERE */
+a:link,a:active,a:visited,a:hover {
+ text-decoration:none;
+ color:black;
+}
+/* Header is the absolute tope of page */
+#header {
+  position:absolute;
+  background-color:#aad;
+  top:0;
+  left:0;
+  width:100%;
+  height:3%;
+  min-height:20px;
+  padding:2px;
+  /* margin-bottom:5px; */
+  border-bottom: 1px solid black;
+}
+#header p {
+  margin:0;
+  margin-left:5px;
+  margin-top:2px;
+}
+/* Footer is the absolute bottom of page */
+#footer {
+  position:absolute;
+  background-color:gray;
+  /* bottom:15px; */
+  bottom:0;
+  left:0;
+  width:100%;
+  height:2%;
+  min-height:30px;
+  padding:2px;
+  /* margin-top:5px; */
+  border-top:1px solid black;
+}
+#footer p {
+  text-align:center;
+  color:white;
+  margin:0;
+  padding:0;
+  font-size:0.7em;
+  margin-bottom:15px;
+}
+/* Content Nestles between header and footer, and should gracefully float
+   in the horizontal center of the screen */
+#container {
+ /*  position:absolute; */
+  background-color:white;
+  width:85%;
+  min-width:500px;
+  max-width:800px;
+  /* height:96%; */
+  height:100%;
+  min-height:100px;
+  margin:0;
+  margin-left:auto;
+  margin-right:auto;
+  padding:0px;
+  border-left:1px solid black;
+  border-right:1px solid black;
+}
+#container .left {
+  float:left;
+  /* position:relative:
+  left:0;
+  top:0; */
+  height:100%;
+  width:25%;
+  min-width:150px;
+  background-color:#ccf;
+  border-right:1px solid black;
+}
+#container .left img {
+  margin-top:10%;
+  width:90%;
+  margin-left:5%;
+  margin-right:5%;
+  border:1px solid black;
+  margin-bottom:5px;
+}
+#container p {
+  font-style:Georgia;
+  padding:10px;
+  text-align:center;
+}
+#container .left p {
+ color:black;
+ font-size:0.8em;
+ text-align:left; 
+ padding-left:5px;
+ padding-top:0;
+ padding-bottom:2px;
+ margin:0;
+}
+#container .left ul {
+  list-style:none;
+  margin-left:0;
+  padding-left:0;
+  width:100%;
+  border-bottom:1px solid black;
+}
+#container .left ul li {
+  display:block;
+  background-color:white;
+  font-size:0.9em;
+  color:gray;
+  height:20px;
+  width:100%;
+  border-top:1px solid black;
+  padding-top:2px;
+  text-align:right;
+}
+#container .left ul li:hover {
+  background-color:gray;
+}
+#container #content {
+  position:relative;
+  top:20px;
+  width:70%;
+  min-width:350px;
+  /* padding:15px; */
+  /* border-right:1px solid black; */
+  margin-left:27%;
+}
+#container #content .summary fieldset {
+  background-color:#dcc;
+}
+#container #content .summary fieldset legend {
+  background-color:white;
+}
+#container #content .summary fieldset #storyTitle a {
+  color:blue;
+}
+#container #content .summary fieldset fieldset legend {
+  background-color:#dcc;
+}
+#container #content .summary fieldset #right {
+  display:block;
+  width:45%;
+  float:right;
+}
+#container #content .summary fieldset #left {
+  display:block;
+  width:45%;
+}
+#container #content .summary fieldset .toggle01 {
+  display:all;
+  /* visibility:hidden; */
+}
+/* Invoice Portion */
+.item,.finalItem {
+  position:relative;
+  width:100%;
+  height:1.2em;
+  /* background-color:#dda; */
+  padding-left:5px;
+}
+.finalItem {
+  font-weight:bold;
+  border-top:1px solid #996;
+}
+.item .descriptor,.finalItem .descriptor {
+  float:right;
+}
+.item .desc {
+  float:left;
+  text-align:left;
+}
+.item .price,.finalItem .price {
+  width:50px;
+  float:right;
+  margin-left:10px;
+  text-align:right;
+}

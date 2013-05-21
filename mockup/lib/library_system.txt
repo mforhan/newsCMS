@@ -1,0 +1,104 @@
+This is the "Library" Folder. In this folder exists the files for performing all
+of the major database reactions for the website. Each specific set of features
+has its own file, to make it more flexible. The system consists of:
+
+user.inc.php - The User Creation/Deletion/Preferences library
+	- create account
+	- delete account
+	- login
+	- logout
+	- isloggedin
+	- send verification email
+	- password change routine
+	- change title
+
+admin.inc.php - master user library
+	- create accounts
+	- manage accounts
+
+webadmin.inc.php
+	- create sites
+	- create site pages
+	- assigning stories to websites
+	- web publishing
+
+editor.inc.php
+	- assign stories to website queue
+	- send stories to proofing
+	- send storied back to writer
+	- viewing individual queues
+	- viewing overall column inch ratings
+
+reporter.inc.php
+	- write stories
+	- edit stories
+	- send stories to editor
+	- view own queue
+	- upload photos
+	- tag photos
+
+site.inc.php - Site processing modules
+	- get story list for site
+	- retrieve stories for site
+	- retrieve author information
+	- archive access for site
+
+DATABASE:
+	USER
+		user_id
+		user_name
+		real_name
+		title
+		password
+		isActive
+	CONTENT
+		article_id
+		section_id
+		headline
+		subhead
+		body
+		author_name
+		author_title
+		user_id
+		date_stamp
+		time_stamp
+		status
+		orig
+		isActive
+		webActive
+		hasPhoto
+	SECTION
+		section_id
+		title
+		ext_url
+		shortdesc
+		isActive
+	SITE_CONTENT
+		site_id
+		content_id
+		section_name
+		publish_date
+		end_date
+		isActive
+	SITES
+		site_id
+		site_name
+		site_style
+		isActive
+	STATUS
+		status_id
+		name
+		description
+		color
+		control_group
+	WEBPHOTO
+		article_id
+		photo_id
+		photo_group_id
+		path
+		cutline
+		photoby
+		width
+		height
+		isActive
+

@@ -1,0 +1,27 @@
+body {
+  /* background-color:#FFF9E9; */
+  /* background-color:#d0d0d0; */
+  background-color:#8495c0;
+  font:xx-small 6pt/8pt georgia;
+  margin:0px 0px 0px 0px;
+  /* width:450px; */
+}
+
+/* These are the Anchor Changes for states */
+a:link {
+  color: black; 
+  text-decoration:none;
+}
+a:visited { 
+  color: black; 
+  text-decoration:none;
+}
+a:hover { 
+  color: gray;
+}
+a:active { 
+  color: black; 
+}
+a img {
+border:none;
+}
