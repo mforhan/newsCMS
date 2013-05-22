@@ -28,12 +28,13 @@ function login($user,$pass,$group) {
  
   $sql = "SELECT user_name, password
             FROM user
-           WHERE user_name = '$user'
-             AND password = '$pass'
+           WHERE user_name = :user
+             AND password = :pass
              AND title != 'Web User'";
 
-  $data = $db->query($sql);
-  $results = $data->fetchRow();
+  $data = $db->prepare($sql);
+  $data->execute(array('user' => $user, 'pass' => $pass));
+  $results = $data->fetch(PDO::FETCH_OBJ);
   
   if($results->user_name) {
     registerUser($results->user_name);

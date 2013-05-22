@@ -1,8 +1,8 @@
 <?
  include('application.inc.php');
 
- if($HTTP_GET_VARS) {
-  $author = $HTTP_GET_VARS['author'];
+ if($_GET) {
+  $author = $_GET['author'];
   $res = getArticlesByAuthor($author);
  }
 ?>
@@ -14,7 +14,7 @@
  <body>
  <? include('nav.html'); ?>
 <?
- while($story = $res->fetchRow()) {
+ while($story = $res->fetch(PDO::FETCH_OBJ)) {
    $article  = $story->article_id;
    $headline = $story->headline;
    $body     = $story->body;
@@ -63,7 +63,7 @@
    <tr>
    <td colspan=2>
 <?
-    while($data = $photo->fetchRow()) {
+    while($data = $photo->fetch(PDO::FETCH_OBJ)) {
        $path = $data->path;
        // $cutline = $data->cutline;
        // $photoby = $data->photoby;

@@ -1,10 +1,10 @@
 <?
-// print_r($HTTP_GET_VARS);
+// print_r($_GET);
 
-if($HTTP_GET_VARS) {
-  $file = $HTTP_GET_VARS['file'];
-  $width = $HTTP_GET_VARS['width'];
-  $height = $HTTP_GET_VARS['height'];
+if($_GET) {
+  $file = $_GET['file'];
+  $width = $_GET['width'];
+  $height = $_GET['height'];
 }
 
 $file = urldecode($file);

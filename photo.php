@@ -2,25 +2,25 @@
 <?php
  include('application.inc.php');
 
- if(!isLoggedin()) {
-    Header('location: login.php');
- }
+// if(!isLoggedin()) {
+//    Header('location: login.php');
+// }
 
-if($HTTP_POST_VARS) {
- $article = $HTTP_POST_VARS['article'];
- $url     = $HTTP_POST_VARS['url'];
- $path    = $HTTP_POST_VARS['path'];
- $cutline = $HTTP_POST_VARS['cutline'];
- $photoby = $HTTP_POST_VARS['photoby'];
+if($_POST) {
+ $article = $_POST['article'];
+ $url     = $_POST['url'];
+ $path    = $_POST['path'];
+ $cutline = $_POST['cutline'];
+ $photoby = $_POST['photoby'];
 
- // print_r($HTTP_POST_VARS);
+ // print_r($_POST);
  if(insert_photo($article,$url,$path,$cutline,$photoby,1)) {
-   unset($HTTP_POST_VARS); 
+   unset($_POST); 
  }
 }
 
- if($HTTP_GET_VARS) {
-   $article_id = $HTTP_GET_VARS['article_id'];
+ if($_GET) {
+   $article_id = $_GET['article_id'];
  }
 ?>
 <html>

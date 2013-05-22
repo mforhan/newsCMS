@@ -1,12 +1,12 @@
 <? 
 include('application.inc.php');
 
-if(!isLoggedin()) {
-  Header('location: login.php');
-}
+//if(!isLoggedin()) {
+//  Header('location: login.php');
+//}
 
-if($HTTP_GET_VARS) {
-  $startNum = $HTTP_GET_VARS['record'];
+if($_GET) {
+  $startNum = $_GET['record'];
 } else {
   $startNum = 0;
 }
@@ -24,7 +24,7 @@ $articles = getArticles($startNum);
    <tr style="border-bottom:1px solid black;background:lightgray;"><th>Author</th><th>Title</th><th>Date</th><th>Status</th><th>[P]</th><th>[W]</th></tr>
 <?
 $alt = 0;
-while($story = $articles->fetchRow()) {
+while($story = $articles->fetch(PDO::FETCH_OBJ)) {
   $article_id = $story->article_id;
   $headline   = $story->headline;
   $author     = $story->author_name;
@@ -32,7 +32,7 @@ while($story = $articles->fetchRow()) {
   $photo      = $story->hasPhoto;
  
   $sites = getSiteInfo($article_id);
-  while($info = $sites->fetchRow()) {
+  while($info = $sites->fetch(PDO::FETCH_OBJ)) {
     $site = $info->site_name;
     $section = $info->section_name;
     $date = $info->date;

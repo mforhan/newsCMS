@@ -7,7 +7,7 @@
     <ul style="list-style:none;padding:0;">
 
 <?
- while($story = $res->fetchRow()) {
+ while($story = $res->fetch(PDO::FETCH_OBJ)) {
    $article  = $story->article_id;
    $headline = $story->headline;
    $hasPhoto = $story->hasPhoto;

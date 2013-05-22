@@ -1,12 +1,12 @@
 <?php
  include('application.inc.php');
 
-  if(!isLoggedin()) {
-    Header('location: login.php');
-  }
+//  if(!isLoggedin()) {
+//    Header('location: login.php');
+//  }
 
- if($HTTP_GET_VARS) {
-   $article_id = $HTTP_GET_VARS['article_id'];
+ if($_GET) {
+   $article_id = $_GET['article_id'];
  }
 ?>
 <html>
@@ -89,7 +89,7 @@ border:none;
   $photo = get_photos($article_id);
   $site = lookup_site($article_id);
 
-  while($data = $photo->fetchRow()) {
+  while($data = $photo->fetch(PDO::FETCH_OBJ)) {
      $path = $data->path;
      $cutline = $data->cutline;
      $photoby = $data->photoby;

@@ -17,9 +17,9 @@ $CFG = new object;
   // Database Config
 $CFG->dbhost = "localhost";
 $CFG->dbport = "";
-$CFG->dbname = "";
-$CFG->dbuser = "";
-$CFG->dbpass = "";
+$CFG->dbname = "prairie_media";
+$CFG->dbuser = "pmedia";
+$CFG->dbpass = "nc139b6";
 
   // Path Variables for links
 $CFG->webserver = "";
@@ -42,20 +42,18 @@ $CFG->csslink = $CFG->dirrootlink."css";
 session_start();
 
 //required library files 
-require_once("DB.php");
 require_once($CFG->libdir."/user.inc.php");
 require_once($CFG->libdir."/content.inc.php");
 require_once($CFG->libdir."/admin.inc.php");
-// dl( 'xdiff.so' );
 
 //theme configuration
 // require_once($CFG->libdir."/theme.inc.php");
 
 //configure variables
-$CFG->title = "Prairie Media CMS";
-$CFG->ADMIN_EMAIL = "pmedia@gazette-tribune.com";
-$CFG->ADMIN_NAME = "Prairie Media Webmaster";
-$CFG->SMTP_SERVER ="localhost";
+$CFG->title = "NewsCMS Backend";
+$CFG->ADMIN_EMAIL = "";
+$CFG->ADMIN_NAME = "";
+$CFG->SMTP_SERVER ="";
 
 //site administrator password
 $CFG->ADMIN_LOGIN = "";
@@ -65,13 +63,13 @@ $CFG->ADMIN_PASSWORD = "";
 $CFG->ERROR_LOG = 1;
 
 //Database Connection
-$db=DB::connect("mysql://$CFG->dbuser:$CFG->dbpass@$CFG->dbhost/$CFG->dbname");
-
-// To set the fetchmode for fetchrow()
-$db->setFetchMode(DB_FETCHMODE_OBJECT);
-
-//to verify between a error or a valid connection.
-if (DB::isError($db)) {
-    die ($db->getMessage());
+try {
+  $db=new PDO("mysql:host=$CFG->dbhost;dbname=$CFG->dbname",$CFG->dbuser,$CFG->dbpass);
+  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  // $db->setFetchMode(FETCH_OBJ);
+} catch(PDOException $e) {
+  echo 'ERROR: ' . $e->getMessage();
 }
+
+
 ?>

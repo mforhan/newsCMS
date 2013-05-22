@@ -1,17 +1,17 @@
 <?
   include('application.inc.php');
 
-  if(!isLoggedin()) {
-    Header('location: login.php');
-  }
+  //if(!isLoggedin()) {
+  //  Header('location: login.php');
+  //}
 
-if($HTTP_GET_VARS) {
-  $startNum = $HTTP_GET_VARS['record'];
+if($_GET) {
+  $startNum = $_GET['record'];
 } else {
   $startNum = 0;
 }
-if($HTTP_POST_VARS) {
-  print_r($HTTP_POST_VARS);
+if($_POST) {
+  print_r($_POST);
   exit();
 }
 /* Site_Content Table
@@ -59,14 +59,14 @@ border:none;
 <form action="manageSites_part2.php" method="post" target="_blank">
 <?
 $alt = 0;
-while($story = $articles->fetchRow()) {
+while($story = $articles->fetch(PDO::FETCH_OBJ)) {
   $article_id = $story->article_id;
   $headline   = $story->headline;
   $status     = $story->status;
   $photo      = $story->hasPhoto;
  
   $sites = getSiteInfo($article_id);
-  while($info = $sites->fetchRow()) {
+  while($info = $sites->fetch(PDO::FETCH_OBJ)) {
     $site = $info->site_name;
     $section = $info->section_name;
     $date = $info->date;

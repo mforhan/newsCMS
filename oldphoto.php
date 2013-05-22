@@ -1,20 +1,20 @@
 <?
 include("application.inc.php");
 
-  if(!isLoggedin()) {
-    Header('location: login.php');
-  }
+//  if(!isLoggedin()) {
+//    Header('location: login.php');
+//  }
 
-if($HTTP_POST_VARS) {
- $article = $HTTP_POST_VARS['article'];
- $url     = $HTTP_POST_VARS['url'];
- $path    = $HTTP_POST_VARS['path'];
- $cutline = $HTTP_POST_VARS['cutline'];
- $photoby = $HTTP_POST_VARS['photoby'];
- $finish  = $HTTP_POST_VARS['finish'];
- $preview  = $HTTP_POST_VARS['preview'];
+if($_POST) {
+ $article = $_POST['article'];
+ $url     = $_POST['url'];
+ $path    = $_POST['path'];
+ $cutline = $_POST['cutline'];
+ $photoby = $_POST['photoby'];
+ $finish  = $_POST['finish'];
+ $preview  = $_POST['preview'];
 
- // print_r($HTTP_POST_VARS);
+ // print_r($_POST);
 
  if( $finish == 1 ) {
    $cutline = urldecode($cutline);
@@ -22,7 +22,7 @@ if($HTTP_POST_VARS) {
    insert_photo($article,$url,$path,$cutline,$photoby,1);
    
    // We need to throw an error and then repopulate the fields with data
-   unset($HTTP_POST_VARS); 
+   unset($_POST); 
  } // else {
    //print "<h3 style='color:red;'>Database Insert Failed</h3>";
  // }

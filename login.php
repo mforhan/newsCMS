@@ -1,14 +1,14 @@
 <? 
 include('application.inc.php');
 
-if($HTTP_POST_VARS['submit']) {
+if($_POST['submit']) {
   unset($user);
   unset($pass);
-  $user = $HTTP_POST_VARS['user'];
-  $pass = $HTTP_POST_VARS['pass'];
-  if( login($user,$pass,'') ) {
-    Header('Location: article.php');
-  }
+  $user = $_POST['user'];
+  $pass = $_POST['pass'];
+//  if( login($user,$pass,'') ) {
+//    Header('Location: article.php');
+//  }
 }
 ?>
 <html>
@@ -47,7 +47,7 @@ table th {
 echo "<h3>$feedback</h3>";
 }
 ?>
-<form action="<?= $PHP_SELF ?>" method="POST">
+<form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
 <center>
 <table rows="3" cols="2">
 <tr>

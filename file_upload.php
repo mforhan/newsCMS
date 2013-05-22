@@ -1,6 +1,6 @@
 <?php
 // print_r($HTTP_POST_FILES);
-$images = $HTTP_POST_FILES['imageUpload'];
+$images = $_POST['imageUpload'];
 
 if(is_uploaded_file($images['tmp_name'])) {
   move_uploaded_file($images['tmp_name'],"inbox/".$images['name']);

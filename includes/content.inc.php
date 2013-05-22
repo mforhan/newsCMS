@@ -8,16 +8,16 @@ function return_static_page_titles() {
             FROM static_content
         ORDER BY date_stamp DESC";
 
-  $results = $db->query($sql); 
-
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
+  try {
+    $results = $db->prepare($SQL);
+    $results->execute();
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
-  
+
   $content = '';
  
-  while($data = $results->fetchRow()) {
+  while($data = $results->fetch(PDO::FETCH_OBJ)) {
     $checked = '';
     $article = $data->article_id;
     $title = $data->title;
@@ -55,14 +55,14 @@ function retrieve_titles() {
             FROM content
         ORDER BY date_stamp DESC";
 
-  $results = $db->query($sql); 
-
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
+  try {
+    $results = $db->prepare($SQL);
+    $results->execute();
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
-  
-  while($data = $results->fetchRow()) {
+
+  while($data = $results->fetch(PDO::FETCH_OBJ)) {
     $checked = '';
     $article = $data->article_id;
     $title = $data->title;
@@ -85,14 +85,14 @@ function retrieve_list_titles() {
             FROM content
         ORDER BY date_stamp DESC";
 
-  $results = $db->query($sql); 
-  
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
+  try {
+    $results = $db->prepare($SQL);
+    $results->execute();
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
-
-  while($data = $results->fetchRow()) {
+  
+  while($data = $results->fetch(PDO::FETCH_OBJ)) {
     $article_id = $data->article_id;
     $title = $data->title;
     $date = $data->date;
@@ -117,14 +117,14 @@ function retrieve_articles($default_article) {
            LIMIT 50";
         // ORDER BY date_stamp DESC";
 
-  $results = $db->query($sql);
-
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
+  try {
+    $results = $db->prepare($SQL);
+    $results->execute();
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
 
-  while($data = $results->fetchRow()) {
+  while($data = $results->fetch(PDO::FETCH_OBJ)) {
     $article_id = $data->article_id;
     $art_title = $data->headline;
     if($article_id == $default_article) {
@@ -141,16 +141,16 @@ function edit_photo($photo_id) {
   $sql = "SELECT article_id,photo_id,path,cutline,photoby,
                  width,height,isactive
             FROM webphoto
-           WHERE photo_id = '$photo_id'";
+           WHERE photo_id = :photo";
 
-  $results = $db->query($sql); 
- 
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
-  } else {
-    return $results;
+  try {
+    $results = $db->prepare($SQL);
+    $results->execute(array(':photo' => $photo_id));
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
+ 
+  return $results;
 }
 /* GET Functions */
 function get_photos($article_id) {
@@ -162,17 +162,17 @@ function get_photos($article_id) {
   
   $SQL = "SELECT path,cutline,photoby,width,height
             FROM webphoto
-           WHERE article_id=$article_id
+           WHERE article_id= :article
              AND isActive = 1";
 
-  $results = $db->query($SQL);
-
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
-  } else {
-    return $results;
+  try {
+    $results = $db->prepare($SQL);
+    $results->execute(array(':article' => $article_id));
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
+
+  return $results;
 }
 function getArticles($pos) {
   global $db;
@@ -185,31 +185,32 @@ function getArticles($pos) {
         ORDER BY a.date_stamp DESC
            LIMIT $pos,20";
  
-  $results = $db->query($SQL);
-
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
-  } else {
-    return $results;
+  try {
+    $results = $db->prepare($SQL);
+    $results->execute();
+    //  $data = $results->fetch(PDO::FETCH_OBJ);
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
+
+  return $results;
 }
 function getArticle($id) {
   global $db;
   $SQL = "SELECT article_id,headline,subhead,body,author_name,author_title,
                  body
             FROM content
-           WHERE article_id=$id
+           WHERE article_id= :article
            LIMIT 1";
- 
-  $results = $db->query($SQL);
-  
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
-  } else {
-    return($results->fetchRow());
+
+  try {
+    $results = $db->prepare($SQL);
+    $results->execute(array(':article' => $id));
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
+ 
+  return($results->fetch(PDO::FETCH_OBJ));
 }
 // function getArticlesByAuthor($name) {
 function getArticlesByAuthor($name,$limit=10) {
@@ -220,18 +221,17 @@ function getArticlesByAuthor($name,$limit=10) {
             FROM content a,
                  status b
            WHERE a.status = b.status_id
-             AND a.author_name like '%$name%'
+             AND a.author_name like :name
         ORDER BY a.date_stamp DESC
            LIMIT $limit";
 
-  $results = $db->query($SQL);
-
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
-  } else {
-    return $results;
+  try {
+    $results = $db->prepare($SQL);
+    $results->execute(array(':name' => $name));
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
+  return $results;
 }
 
 /* END Get Functions */
@@ -245,17 +245,17 @@ function lookup_site($article_id) {
   
   $SQL = "SELECT site_id
             FROM site_content
-           WHERE content_id=$article_id";
+           WHERE content_id= :article";
 
-  $results = $db->query($SQL);
-
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
-  } else {
-    $sites = $results->fetchRow();
-    return $sites->site_id;
+  try {
+    $results = $db->prepare($SQL);
+    $results->execute(array(':article' => $article_id));
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
+
+  $sites = $results->fetch(PDO::FETCH_OBJ);
+  return $sites->site_id;
 }
 function getSiteInfo($article) {
   global $db;
@@ -263,46 +263,47 @@ function getSiteInfo($article) {
                  date_format(a.publish_date,'%m/%d/%Y') as date
             FROM site_content a,
                  sites b
-           WHERE content_id=$article
+           WHERE content_id= :article
              AND a.site_id=b.site_id";
-  $results = $db->query($SQL);
-
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
-  } else {
-    return $results;
+  try {
+    $results = $db->prepare($SQL);
+    $results->execute(array(':article' => $article));
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
+  return $results;
 }
 function getSections($site) {
   global $db;
+
   $SQL = "SELECT DISTINCT(section_name)
             FROM site_content
-           WHERE site_id=$site";
-  $results = $db->query($SQL);
+           WHERE site_id= :site";
 
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
-  } else {
-    return $results;
+  try {
+    $results = $db->prepare($SQL);
+    $results->execute(array(':site' => $site));
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
+
+  return $results;
 }
 function getHeadline($article) {
   global $db;
   $SQL = "SELECT headline
             FROM content
-           WHERE article_id=$article";
-  $results = $db->query($SQL);
-
-  if(DB::iserror($results)) {
-   // die($results->getMessage());
-    trigger_error ("Select Error:".$results->getMessage() , E_USER_ERROR);
-  } else {
-    // return $results;
-    $data = $results->fetchRow();
-    return $data->headline;
+           WHERE article_id= :article";
+  
+try {
+    $results = $db->prepare($SQL);
+    $results->execute(array(':article' => $article));
+  } catch(PDOException $e) {
+    trigger_error('ERROR: ' . $e->getMessage(), E_USER_ERROR);
   }
+
+  $data = $results->fetch(PDO::FETCH_OBJ);
+  return $data->headline;
 }
 
 /* Taken from comments @ php.net (http://us2.php.net/manual/en/ref.image.php) */

@@ -1,15 +1,15 @@
 <?
   include('application.inc.php');
 
-  if(!isLoggedin()) {
-    Header('location: login.php');
-  }
+//  if(!isLoggedin()) {
+//    Header('location: login.php');
+//  }
 $articles = array();
-if($HTTP_POST_VARS) {
-  if($HTTP_POST_VARS['finish']) {
-    // print_r($HTTP_POST_VARS);
-    $url = $HTTP_POST_VARS['finish'];
-    foreach($HTTP_POST_VARS as $key=>$value) {
+if($_POST) {
+  if($_POST['finish']) {
+    // print_r($_POST);
+    $url = $_POST['finish'];
+    foreach($_POST as $key=>$value) {
       if($key != 'finish' && $key != 'submit') {
         // print "set ($key,$value,$url)<br/>\n"; 
         $results = setSite($key,$value,$url);
@@ -22,9 +22,9 @@ if($HTTP_POST_VARS) {
       }
     }
   } else {
-    // print_r($HTTP_POST_VARS);
-    $site = $HTTP_POST_VARS['site'];
-    foreach($HTTP_POST_VARS as $key=>$value) {
+    // print_r($_POST);
+    $site = $_POST['site'];
+    foreach($_POST as $key=>$value) {
       // print "[$key] ($value)<br/>\n";
       if($value == 'on') {
         array_push($articles,$key);
@@ -64,7 +64,7 @@ $sections = getSections($site);
 
 // $SELECT = "<SELECT name=\"section\">\n";
 $SELECT = "";
-while($section = $sections->fetchRow()) {
+while($section = $sections->fetch(PDO::FETCH_OBJ)) {
   $sect_name = $section->section_name;
   $SELECT .= "<OPTION value=\"$sect_name\">$sect_name</OPTION>\n";
 }

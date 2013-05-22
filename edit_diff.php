@@ -1,13 +1,13 @@
 <?
 include("application.inc.php");
 
-  if(!isLoggedin()) {
-    Header('location: login.php');
-  }
+//  if(!isLoggedin()) {
+//    Header('location: login.php');
+//  }
 
-if($HTTP_POST_VARS || $HTTP_GET_VARS) {
- if($HTTP_GET_VARS['article_id']) {
-   $article_id = $HTTP_GET_VARS['article_id'];
+if($_POST || $_POST) {
+ if($_POST['article_id']) {
+   $article_id = $_POST['article_id'];
    $data = getArticle($article_id);
    $headline     = $data->headline;
    $subhead      = $data->subhead;
@@ -15,12 +15,12 @@ if($HTTP_POST_VARS || $HTTP_GET_VARS) {
    $author_title = $data->author_title;
    $body         = $data->body;
  } else {
-   $headline = $HTTP_POST_VARS['headline'];
-   $subhead  = $HTTP_POST_VARS['subhead'];
-   $body = $HTTP_POST_VARS['bodyContent'];
-   $author_name   = $HTTP_POST_VARS['author'];
-   $author_title  = $HTTP_POST_VARS['title'];
-   $article_id = $HTTP_POST_VARS['article'];
+   $headline = $_POST['headline'];
+   $subhead  = $_POST['subhead'];
+   $body = $_POST['bodyContent'];
+   $author_name   = $_POST['author'];
+   $author_title  = $_POST['title'];
+   $article_id = $_POST['article'];
    if($article_id) {
      test_update_article($article_id,$headline,$subhead,$body,$author_name,$author_title,1);
      // print "<h3 style='color:red;'>Updating... </h3>";
@@ -28,13 +28,13 @@ if($HTTP_POST_VARS || $HTTP_GET_VARS) {
      if(test_insert_article($headline,$subhead,$body,$author_name,$author_title,1)) {
        // We need to throw an error and then repopulate the fields with data
        // print "<h3 style='color:red;'>Inserting... </h3>";
-       unset($HTTP_POST_VARS); 
+       unset($_POST); 
      } else {
        print "<h3 style='color:red;'>Database Insert Failed</h3>";
      }
    }
  }
- //  print_r($HTTP_POST_VARS);
+ //  print_r($_POST);
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
